@@ -1,0 +1,57 @@
+{% extends "adminBase.html" %}
+
+{% block title %}Admin Gallery{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Manage Gallery</h2>
+</div>
+
+<!-- Upload Section -->
+<div class="form-container" style="min-height: auto; padding-bottom: 40px;">
+    <div class="form-card" style="width: 100%;">
+        <div class="form-header">
+            <h2>Upload New Image</h2>
+            <p>Select an image to add to the public gallery.</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('upload_gallery') }}" enctype="multipart/form-data" class="modern-form">
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="image">Choose Image</label>
+                <input type="file" name="image" id="image" accept="image/*" required>
+            </div>
+            <div class="form-footer">
+                <button type="submit" class="btn-primary">Upload</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Existing Images Section -->
+<div class="table-container">
+    <h3>Current Gallery Images</h3>
+    <br>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+        {% for image in images %}
+        <div style="background: white; border: 1px solid #eee; border-radius: 8px; padding: 10px;text-align: center;">
+            <div style="height: 150px; overflow: hidden; border-radius: 6px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; background: #f9f9f9;">
+                <img src="{{ url_for('static', filename='uploads/' + image.filename) }}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            </div>
+            <a href="{{ url_for('delete_image', id=image.id) }}" class="btn-delete" style="display: inline-block; width: 100%; box-sizing: border-box;" onclick="return confirm('Are you sure you want to delete this image?');">Delete</a>
+        </div>
+        {% else %}
+        <p style="color: #666; grid-column: 1 / -1;">No images uploaded yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

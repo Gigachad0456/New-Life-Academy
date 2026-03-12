@@ -1,0 +1,52 @@
+{% extends "adminBase.html" %}
+{% block content %}
+
+<div class="form-container">
+    <h2>Add New Teacher</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="teacher-form">
+        <label>Full Name*</label>
+        <input type="text" name="full_name" required>
+
+        <label>Gender*</label>
+        <select name="gender" required>
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label>Subjects*</label>
+        <input type="text" name="subjects" placeholder="e.g., Math, Science" required>
+
+        <label>Classes Assigned</label>
+        <input type="text" name="classes_assigned" placeholder="e.g., Class 1, Class 2">
+
+        <label>Date of Birth</label>
+        <input type="date" name="dob">
+
+        <label>Contact Number</label>
+        <input type="text" name="contact_number">
+
+        <label>Email</label>
+        <input type="email" name="email">
+
+        <label>Hire Date</label>
+        <input type="date" name="hire_date">
+
+        <label>Salary</label>
+        <input type="number" name="salary" step="0.01">
+
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admissions | New Life Ministry School</title>
+    <!-- Flask Static CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header>
+  <div class="nav-container">
+    <h1>New Life Academy</h1>
+
+    <div class="menu-toggle" id="menu-toggle">
+      ☰
+    </div>
+
+    <nav id="nav-menu">
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('academics') }}">Academics</a></li>
+        <li><a href="{{ url_for('admission') }}">Admissions</a></li>
+        <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        <li><a href="{{ url_for('admin_login') }}" class="admin-link">Admin</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- HERO -->
+<section class="page-hero">
+  <h2>Admissions 2026</h2>
+  <p>Begin your child’s journey toward excellence</p>
+</section>
+
+<!-- OVERVIEW -->
+<section class="admission-overview">
+  <h3>Why Choose New Life Ministry School?</h3>
+  <p>
+    We provide a nurturing, faith-based academic environment focused on
+    excellence, discipline, and character development.
+    Our admissions process is simple and transparent.
+  </p>
+</section>
+
+<!-- REQUIREMENTS -->
+<section class="requirements">
+  <h3>Admission Requirements</h3>
+  <div class="requirements-grid">
+    <div class="req-card">
+      <h4>Completed Application Form</h4>
+    </div>
+    <div class="req-card">
+      <h4>Birth Certificate (Copy)</h4>
+    </div>
+    <div class="req-card">
+      <h4>Previous School Report</h4>
+    </div>
+    <div class="req-card">
+      <h4>Passport Photographs (2)</h4>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="admission-steps">
+  <h3>Application Process</h3>
+
+  <div class="steps-container">
+    <div class="step">
+      <span>1</span>
+      <p>Submit completed application form</p>
+    </div>
+
+    <div class="step">
+      <span>2</span>
+      <p>Attend student assessment/interview</p>
+    </div>
+
+    <div class="step">
+      <span>3</span>
+      <p>Receive admission confirmation</p>
+    </div>
+
+    <div class="step">
+      <span>4</span>
+      <p>Complete registration & fee payment</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="admission-cta">
+  <h3>Ready to Apply?</h3>
+  <p>Download the admission form or contact us for assistance.</p>
+  <a href="{{ url_for('admission_form') }}" class="btn-primary">
+  Apply Now
+</a>
+</section>
+
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- About School -->
+    <div class="footer-col">
+      <h3>New Life Ministry School</h3>
+      <p>
+        Committed to academic excellence, character development,
+        and nurturing future leaders in a safe and inspiring environment.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="admission.html">Admissions</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <p>📍 123 School Road, Your City</p>
+      <p>📞 +234 800 000 0000</p>
+      <p>✉ info@newlifeschool.com</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 New Life Ministry School. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script src="../js/script.js"></script>
+</body>
+</html>

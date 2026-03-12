@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Academics | New Life Ministry School</title>
+  <!-- Flask Static CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header>
+  <div class="nav-container">
+    <h1>New Life Academy</h1>
+
+    <div class="menu-toggle" id="menu-toggle">
+      ☰
+    </div>
+
+    <nav id="nav-menu">
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('academics') }}">Academics</a></li>
+        <li><a href="{{ url_for('admission') }}">Admissions</a></li>
+        <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        <li><a href="{{ url_for('admin_login') }}" class="admin-link">Admin</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- HERO -->
+<section class="page-hero">
+  <h2>Our Academic Programs</h2>
+  <p>Providing a strong foundation for lifelong success</p>
+</section>
+
+<!-- ACADEMIC LEVELS -->
+<section class="academic-levels">
+  <h3>Academic Structure</h3>
+
+  <div class="levels-grid">
+
+    <div class="level-card">
+      <h4>Pre-School</h4>
+      <p>Early childhood development focusing on creativity, communication, and foundational skills.</p>
+    </div>
+
+    <div class="level-card">
+      <h4>Primary School</h4>
+      <p>Comprehensive core subjects including Mathematics, English, Science, and Social Studies.</p>
+    </div>
+
+    <div class="level-card">
+      <h4>Secondary School</h4>
+      <p>Advanced curriculum preparing students for national examinations and higher education.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="curriculum">
+  <div class="curriculum-container">
+    <div class="curriculum-text">
+      <h3>Our Curriculum</h3>
+      <p>
+        We follow a balanced and structured curriculum that integrates academic excellence,
+        spiritual growth, and character formation.
+      </p>
+      <ul>
+        <li>✔ Mathematics & Sciences</li>
+        <li>✔ Languages & Literature</li>
+        <li>✔ ICT & Digital Skills</li>
+        <li>✔ Civic & Moral Education</li>
+        <li>✔ Creative Arts & Music</li>
+      </ul>
+    </div>
+
+    <div class="curriculum-image">
+      <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b" alt="Classroom">
+    </div>
+  </div>
+</section>
+
+<!-- DEPARTMENTS -->
+<section class="departments">
+  <h3>Academic Departments</h3>
+
+  <div class="department-grid">
+    <div class="department-card">Science Department</div>
+    <div class="department-card">Mathematics Department</div>
+    <div class="department-card">Languages Department</div>
+    <div class="department-card">ICT Department</div>
+    <div class="department-card">Arts & Humanities</div>
+    <div class="department-card">Physical Education</div>
+  </div>
+</section>
+
+<!-- EXTRACURRICULAR -->
+<section class="extracurricular">
+  <h3>Beyond the Classroom</h3>
+  <p>
+    We encourage students to participate in sports, debate clubs, music,
+    leadership training, and community service activities.
+  </p>
+</section>
+
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- About School -->
+    <div class="footer-col">
+      <h3>New Life Ministry School</h3>
+      <p>
+        Committed to academic excellence, character development,
+        and nurturing future leaders in a safe and inspiring environment.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="admission.html">Admissions</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <p>📍 123 School Road, Your City</p>
+      <p>📞 +234 800 000 0000</p>
+      <p>✉ info@newlifeschool.com</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 New Life Ministry School. All Rights Reserved.</p>
+  </div>
+</footer>
+
+
+<!-- Flask Static JS -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

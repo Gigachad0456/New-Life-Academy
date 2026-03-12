@@ -1,0 +1,93 @@
+{% extends "adminBase.html" %}
+{% block content %}
+
+<div class="dashboard-wrapper">
+
+    <div class="page-header">
+        <div>
+            <h2>Admission Management</h2>
+            <p>Manage student admission applications</p>
+        </div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="admission-stats">
+        <div class="stat-box">
+            <h3>{{ total }}</h3>
+            <p>Total Applications</p>
+        </div>
+        <div class="stat-box pending">
+            <h3>{{ pending }}</h3>
+            <p>Pending</p>
+        </div>
+        <div class="stat-box approved">
+            <h3>{{ approved }}</h3>
+            <p>Approved</p>
+        </div>
+        <div class="stat-box rejected">
+            <h3>{{ rejected }}</h3>
+            <p>Rejected</p>
+        </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="admission-table-card">
+
+        {% if admissions %}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Student</th>
+                    <th>Parent</th>
+                    <th>Class</th>
+                    <th>Contact</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for admission in admissions %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ admission.student_name }}</td>
+                    <td>{{ admission.parent_name }}</td>
+                    <td>{{ admission.student_class }}</td>
+                    <td>{{ admission.contact }}</td>
+
+                    <td>
+                        <span class="badge {{ admission.status }}">
+                            {{ admission.status }}
+                        </span>
+                    </td>
+
+                    <td class="actions">
+                        {% if admission.status == "pending" %}
+                        <form action="{{ url_for('approve_admission', id=admission.id) }}" method="POST" style="display:inline;">
+    <button type="submit" class="btn-approve">Approve</button>
+</form>
+                        <form action="{{ url_for('reject_admission', id=admission.id) }}" method="POST" style="display:inline;">
+    <button type="submit" class="btn-reject">Reject</button>
+</form>
+                        {% else %}
+                        <span class="no-action">No Action</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% else %}
+        <div class="empty-state">
+            <h3>No Admission Applications Yet</h3>
+            <p>When students apply, they will appear here.</p>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

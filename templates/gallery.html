@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gallery | New Life Ministry School</title>
+  <!-- Flask Static CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+  <div class="nav-container">
+    <h1>New Life Academy</h1>
+
+    <div class="menu-toggle" id="menu-toggle">
+      ☰
+    </div>
+
+    <nav id="nav-menu">
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('academics') }}">Academics</a></li>
+        <li><a href="{{ url_for('admission') }}">Admissions</a></li>
+        <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        <li><a href="{{ url_for('admin_login') }}" class="admin-link">Admin</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="page-hero">
+  <h2>Our School Gallery</h2>
+  <p>Moments of excellence, learning, and growth</p>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section">
+
+  <div class="gallery-grid">
+
+    {% for image in images %}
+    <div class="gallery-item">
+      <img src="{{ url_for('static', filename='uploads/' + image.filename) }}" alt="School Gallery Image">
+    </div>
+    {% else %}
+    <p>No images uploaded yet.</p>
+    {% endfor %}
+
+  </div>
+
+</section>
+
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- About School -->
+    <div class="footer-col">
+      <h3>New Life Ministry School</h3>
+      <p>
+        Committed to academic excellence, character development,
+        and nurturing future leaders in a safe and inspiring environment.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="admission.html">Admissions</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <p>📍 123 School Road, Your City</p>
+      <p>📞 +234 800 000 0000</p>
+      <p>✉ info@newlifeschool.com</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 New Life Ministry School. All Rights Reserved.</p>
+  </div>
+</footer>
+
+
+<!-- Flask Static JS -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>About | New Life Ministry School</title>
+  <!-- Flask Static CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header>
+  <div class="nav-container">
+    <h1>New Life Academy</h1>
+
+    <div class="menu-toggle" id="menu-toggle">
+      ☰
+    </div>
+
+    <nav id="nav-menu">
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('academics') }}">Academics</a></li>
+        <li><a href="{{ url_for('admission') }}">Admissions</a></li>
+        <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        <li><a href="{{ url_for('admin_login') }}" class="admin-link">Admin</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="page-hero">
+  <h2>About Our School</h2>
+  <p>Building character. Inspiring excellence. Shaping the future.</p>
+</section>
+
+<!-- STORY -->
+<section class="about-story">
+  <div class="about-container">
+    <div class="about-text">
+      <h3>Our Story</h3>
+      <p>
+        Founded with a passion for academic excellence and strong moral values,
+        New Life Ministry School has grown into a trusted institution committed
+        to nurturing confident, responsible, and God-fearing leaders.
+      </p>
+      <p>
+        We believe education goes beyond the classroom. Our goal is to develop
+        the whole child — academically, spiritually, socially, and physically.
+      </p>
+    </div>
+
+    <div class="about-image">
+      <img src="https://images.unsplash.com/photo-1588072432836-e10032774350" alt="School 1">
+    </div>
+  </div>
+</section>
+
+<!-- VISION & VALUES -->
+<section class="vision-values">
+  <h3>Our Vision & Values</h3>
+
+  <div class="values-grid">
+    <div class="value-card">
+      <h4>Our Vision</h4>
+      <p>To be a leading institution recognized for academic excellence and character development.</p>
+    </div>
+
+    <div class="value-card">
+      <h4>Our Mission</h4>
+      <p>To provide quality education in a nurturing, disciplined, and faith-based environment.</p>
+    </div>
+
+    <div class="value-card">
+      <h4>Core Values</h4>
+      <p>Integrity, Excellence, Discipline, Respect, and Faith.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPAL MESSAGE -->
+<section class="principal-message">
+  <div class="principal-container">
+    <img src="https://images.unsplash.com/photo-1603415526960-f7e0328c63b1" alt="Principal">
+
+    <div>
+      <h3>Message from the Principal</h3>
+      <p>
+        Welcome to New Life Ministry School. Our commitment is to create a safe
+        and inspiring environment where every student can thrive academically
+        and spiritually. Together with parents and staff, we strive to build
+        a strong foundation for lifelong success.
+      </p>
+      <p><strong>— Principal</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="school-stats">
+  <div class="stats-grid">
+    <div class="stat">
+      <h2>500+</h2>
+      <p>Students</p>
+    </div>
+    <div class="stat">
+      <h2>40+</h2>
+      <p>Qualified Teachers</p>
+    </div>
+    <div class="stat">
+      <h2>15+</h2>
+      <p>Years of Excellence</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- About School -->
+    <div class="footer-col">
+      <h3>New Life Ministry School</h3>
+      <p>
+        Committed to academic excellence, character development,
+        and nurturing future leaders in a safe and inspiring environment.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="admission.html">Admissions</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <p>📍 123 School Road, Your City</p>
+      <p>📞 +234 800 000 0000</p>
+      <p>✉ info@newlifeschool.com</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 New Life Ministry School. All Rights Reserved.</p>
+  </div>
+</footer>
+
+
+<!-- Flask Static JS -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

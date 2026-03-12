@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Life Academy</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header class="header">
+  <div class="nav-container">
+    <h1 class="logo">New Life Academy</h1>
+
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+
+    <nav id="nav-menu">
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('academics') }}">Academics</a></li>
+        <li><a href="{{ url_for('admission') }}">Admissions</a></li>
+        <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        <li><a href="{{ url_for('admin_login') }}" class="admin-link">Admin</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO SLIDER -->
+  <section class="slider">
+    <div class="slides">
+
+      <div class="slide active">
+        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350" alt="School 1">
+        <div class="overlay"></div>
+        <div class="slide-text">
+          <h2>Welcome to New Life Ministry School</h2>
+          <p>Shaping minds. Building character. Inspiring excellence.</p>
+          <a href="{{ url_for('admission') }}" class="btn-primary">Admissions Open 2026</a>
+        </div>
+      </div>
+
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7" alt="School 2">
+        <div class="overlay"></div>
+        <div class="slide-text">
+          <h2>Secure Your Child’s Future</h2>
+          <p>Quality education in a nurturing environment.</p>
+          <a href="{{ url_for('admission') }}" class="btn-primary">Apply Now</a>
+        </div>
+      </div>
+
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" alt="School 3">
+        <div class="overlay"></div>
+        <div class="slide-text">
+          <h2>Sports & Co-Curricular Activities</h2>
+          <p>Developing confident, well-rounded students.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </section>
+
+  <!-- ABOUT PREVIEW -->
+  <section class="home-about">
+    <div class="container">
+      <h2>About Our School</h2>
+      <p>
+        At New Life Academy, we combine academic excellence with strong moral
+        foundations to develop future leaders who are confident, responsible,
+        and compassionate.
+      </p>
+      <a href="{{ url_for('about') }}" class="btn-secondary">Learn More</a>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="container grid">
+      <div class="feature-card">
+        <h3>Qualified Teachers</h3>
+        <p>Experienced educators committed to student success.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Modern Facilities</h3>
+        <p>Well-equipped classrooms and learning resources.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Safe Environment</h3>
+        <p>A secure and nurturing atmosphere for every child.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <h3>New Life Ministry School</h3>
+      <p>
+        Committed to academic excellence, character development,
+        and nurturing future leaders.
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="{{ url_for('about') }}">About Us</a></li>
+        <li><a href="{{ url_for('academics') }}">Academics</a></li>
+        <li><a href="{{ url_for('admission') }}">Admissions</a></li>
+        <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>📍 123 School Road, Your City</p>
+      <p>📞 +234 800 000 0000</p>
+      <p>✉ info@newlifeschool.com</p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 New Life Ministry School. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
