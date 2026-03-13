@@ -1,67 +1,44 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard | New Life Ministry School</title>
-    <link rel="stylesheet" href="../static/css/admin.css" />
-  </head>
-  <body>
-    <div class="dashboard">
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <h1>Welcome, {{ admin }}</h1>
-        <ul>
-          <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-          <li><a href="{{ url_for('students') }}">Students</a></li>
-          <li><a href="{{ url_for('teachers') }}">Teachers</a></li>
-          <li><a href="{{ url_for('admin_admissions') }}">Admissions</a></li>
-          <li><a href="{{ url_for('gallery_admin') }}">Gallery Upload</a></li>
-          <li><a href="{{ url_for('messages') }}">Messages</a></li>
-          <li><a href="{{ url_for('logout') }}">Logout</a></li>
-        </ul>
-      </aside>
+{% extends "adminBase.html" %}
 
-      <!-- Main Content -->
-      <main class="main-content">
-        <header class="dashboard-header">
-          <h1>Welcome, {{ admin }}</h1>
-        </header>
+{% block title %}Admin Dashboard{% endblock %}
 
-        <!-- Stats Cards -->
-        <section class="stats">
-          <div class="stat-card">
-            <h3>{{ total_students }}</h3>
-            <p>Total Students</p>
-          </div>
+{% block content %}
+<header class="dashboard-header">
+  <h2>Dashboard Overview</h2>
+  <p style="color: #666;">Welcome back, {{ admin }}. Here is what's happening today.</p>
+</header>
 
-          <div class="stat-card">
-            <h3>{{ total_teachers}}</h3>
-            <p>Teachers</p>
-          </div>
+<!-- Stats Cards -->
+<section class="stats" style="margin-top: 20px;">
+  <div class="stat-card">
+    <h3>{{ total_students }}</h3>
+    <p>Total Students</p>
+  </div>
 
-          <div class="stat-card">
-            <h3>18</h3>
-            <p>New Admissions</p>
-          </div>
+  <div class="stat-card">
+    <h3>{{ total_teachers }}</h3>
+    <p>Teachers</p>
+  </div>
 
-          <div class="stat-card">
-            <h3>12</h3>
-            <p>New Messages</p>
-          </div>
-        </section>
+  <div class="stat-card" style="border-left: 4px solid #f39c12;">
+    <h3>{{ active_announcements }}</h3>
+    <p>Active Announcements</p>
+  </div>
 
-        <!-- Recent Activity -->
-        <section class="recent">
-          <h2>Recent Activity</h2>
-          <ul>
-            <li>✔ New admission submitted</li>
-            <li>✔ Gallery updated</li>
-            <li>✔ Contact form message received</li>
-            <li>✔ Teacher profile edited</li>
-          </ul>
-        </section>
-      </main>
-    </div>
-  </body>
-</html>
+  <div class="stat-card" style="border-left: 4px solid #e74c3c;">
+    <h3>{{ total_inquiries }}</h3>
+    <p>Contact Inquiries</p>
+  </div>
+</section>
+
+<!-- Quick Management Links -->
+<section class="recent" style="margin-top: 30px;">
+  <h2>Quick Management</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+    <a href="{{ url_for('messages') }}" class="btn" style="text-align: center; text-decoration: none; display: block;">📢 Manage Announcements</a>
+    <a href="{{ url_for('inquiries') }}" class="btn" style="text-align: center; text-decoration: none; display: block;">✉ Review Inquiries</a>
+    <a href="{{ url_for('admin_principal') }}" class="btn" style="text-align: center; text-decoration: none; display: block;">🎓 Update Principal DP</a>
+    <a href="{{ url_for('gallery_admin') }}" class="btn" style="text-align: center; text-decoration: none; display: block;">📷 Upload to Gallery</a>
+  </div>
+</section>
+{% endblock %}

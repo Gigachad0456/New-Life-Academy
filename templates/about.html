@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -84,16 +84,15 @@
 <!-- PRINCIPAL MESSAGE -->
 <section class="principal-message">
   <div class="principal-container">
-    <img src="https://images.unsplash.com/photo-1603415526960-f7e0328c63b1" alt="Principal">
+    {% if message_record and message_record.image_filename %}
+      <img src="{{ url_for('static', filename='uploads/' + message_record.image_filename) }}" alt="Principal">
+    {% else %}
+      <img src="https://images.unsplash.com/photo-1603415526960-f7e0328c63b1" alt="Principal">
+    {% endif %}
 
     <div>
       <h3>Message from the Principal</h3>
-      <p>
-        Welcome to New Life Ministry School. Our commitment is to create a safe
-        and inspiring environment where every student can thrive academically
-        and spiritually. Together with parents and staff, we strive to build
-        a strong foundation for lifelong success.
-      </p>
+      <p style="white-space: pre-wrap;">{{ principal_message }}</p>
       <p><strong>— Principal</strong></p>
     </div>
   </div>

@@ -70,6 +70,21 @@
     <button class="next">&#10095;</button>
   </section>
 
+  <!-- ANNOUNCEMENTS -->
+  {% if announcements %}
+  <section class="announcements" style="background-color: #fef0cd; padding: 30px 0; border-bottom: 2px solid #f39c12;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+      <h3 style="color: #d35400; margin-top: 0; margin-bottom: 20px; font-size: 1.5rem; text-align: center;">📢 Latest Announcements</h3>
+      {% for ann in announcements %}
+      <div class="announcement-item" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 15px;">
+        <h4 style="margin: 0 0 10px 0; font-size: 1.2rem; color: #333;">{{ ann.title }} <span style="font-size: 0.9rem; color: #7f8c8d; font-weight: normal;">({{ ann.timestamp.strftime('%B %d, %Y') }})</span></h4>
+        <p style="margin: 0; color: #555; line-height: 1.6;">{{ ann.content }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
   <!-- ABOUT PREVIEW -->
   <section class="home-about">
     <div class="container">

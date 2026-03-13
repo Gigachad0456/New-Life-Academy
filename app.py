@@ -7,9 +7,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import flash
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"
+app.secret_key = os.environ.get("SECRET_KEY", "supersecretkey")
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///database.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["UPLOAD_FOLDER"] = os.path.join(app.root_path, "static", "uploads")
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
@@ -26,11 +26,17 @@ class Admin(db.Model):
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    announcements = Announcement.query.filter_by(is_active=True).order_by(Announcement.timestamp.desc()).all()
+    return render_template("index.html", announcements=announcements)
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    message_record = PrincipalMessage.query.first()
+    # Fallback to default message if database is empty
+    default_text = "Welcome to New Life Ministry School. Our commitment is to create a safe and inspiring environment where every student can thrive academically and spiritually. Together with parents and staff, we strive to build a strong foundation for lifelong success."
+    principal_message = message_record.message if message_record else default_text
+    
+    return render_template("about.html", principal_message=principal_message, message_record=message_record)
 
 @app.route("/academics")
 def academics():
@@ -127,8 +133,30 @@ def gallery():
     images = Gallery.query.all()
     return render_template("gallery.html", images=images)
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+        subject = request.form.get("subject")
+        message = request.form.get("message")
+        
+        if not name or not email or not message:
+            flash("Please fill in all required fields.", "error")
+            return redirect(url_for("contact"))
+            
+        new_inquiry = ContactInquiry(
+            name=name,
+            email=email,
+            subject=subject,
+            message=message
+        )
+        db.session.add(new_inquiry)
+        db.session.commit()
+        
+        flash("Thank you for your message! We will get back to you soon.", "success")
+        return redirect(url_for("contact"))
+        
     return render_template("contact.html")
 
 @app.route("/admin", methods=["GET", "POST"])
@@ -188,6 +216,27 @@ class Gallery(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(300), nullable=False)
 
+class Announcement(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    is_active = db.Column(db.Boolean, default=True)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+class ContactInquiry(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), nullable=False)
+    email = db.Column(db.String(150), nullable=False)
+    subject = db.Column(db.String(200))
+    message = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+class PrincipalMessage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    message = db.Column(db.Text, nullable=False)
+    image_filename = db.Column(db.String(255), nullable=True)
+    date_updated = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
 @app.route("/dashboard")
 def dashboard():
     if "admin" not in session:
@@ -195,11 +244,15 @@ def dashboard():
 
     total_students = Student.query.count()
     total_teachers = Teacher.query.count()
+    active_announcements = Announcement.query.filter_by(is_active=True).count()
+    total_inquiries = ContactInquiry.query.count()
 
     return render_template("adminDashboard.html",
                            admin=session["admin"],
                            total_students=total_students,
-                           total_teachers=total_teachers)
+                           total_teachers=total_teachers,
+                           active_announcements=active_announcements,
+                           total_inquiries=total_inquiries)
  
 @app.route("/logout")
 def logout():
@@ -396,7 +449,52 @@ def delete_image(id):
 def messages():
     if "admin" not in session:
         return redirect(url_for("admin_login"))
-    return render_template("adminMessages.html", admin=session["admin"])
+        
+    announcements = Announcement.query.order_by(Announcement.timestamp.desc()).all()
+    return render_template("adminMessages.html", admin=session["admin"], announcements=announcements)
+
+@app.route("/admin/messages/add", methods=["POST"])
+def add_message():
+    if "admin" not in session:
+        return redirect(url_for("admin_login"))
+        
+    title = request.form.get("title")
+    content = request.form.get("content")
+    
+    if not title or not content:
+        flash("Title and Content are required", "error")
+        return redirect(url_for("messages"))
+        
+    new_announcement = Announcement(title=title, content=content)
+    db.session.add(new_announcement)
+    db.session.commit()
+    
+    flash("Announcement created successfully!", "success")
+    return redirect(url_for("messages"))
+
+@app.route("/admin/messages/toggle/<int:id>")
+def toggle_message(id):
+    if "admin" not in session:
+        return redirect(url_for("admin_login"))
+        
+    announcement = Announcement.query.get_or_404(id)
+    announcement.is_active = not announcement.is_active
+    db.session.commit()
+    
+    flash(f"Announcement marked as {'Active' if announcement.is_active else 'Inactive'}.", "success")
+    return redirect(url_for("messages"))
+
+@app.route("/admin/messages/delete/<int:id>")
+def delete_message(id):
+    if "admin" not in session:
+        return redirect(url_for("admin_login"))
+        
+    announcement = Announcement.query.get_or_404(id)
+    db.session.delete(announcement)
+    db.session.commit()
+    
+    flash("Announcement deleted successfully!", "success")
+    return redirect(url_for("messages"))
  
 
 @app.route("/admin/students/add", methods=["GET", "POST"])
@@ -456,7 +554,69 @@ def edit_student(id):
         return redirect(url_for("edit_student", id=id))
 
     return render_template("editStudent.html", student=student)
-@app.route("/admin/students/delete/<int:id>")
+@app.route("/admin/inquiries")
+def inquiries():
+    if "admin" not in session:
+        return redirect(url_for("admin_login"))
+        
+    all_inquiries = ContactInquiry.query.order_by(ContactInquiry.timestamp.desc()).all()
+    return render_template("adminInquiries.html", admin=session["admin"], inquiries=all_inquiries)
+
+@app.route("/admin/inquiries/delete/<int:id>")
+def delete_inquiry(id):
+    if "admin" not in session:
+        return redirect(url_for("admin_login"))
+        
+    inquiry = ContactInquiry.query.get_or_404(id)
+    db.session.delete(inquiry)
+    db.session.commit()
+    
+    flash("Inquiry deleted successfully!", "success")
+    return redirect(url_for("inquiries"))
+
+@app.route("/admin/principal", methods=["GET", "POST"])
+def admin_principal():
+    if "admin" not in session:
+        return redirect(url_for("admin_login"))
+        
+    message_record = PrincipalMessage.query.first()
+    
+    if request.method == "POST":
+        new_text = request.form.get("message")
+        image = request.files.get("image")
+        
+        if not new_text or not new_text.strip():
+            flash("Message cannot be empty.", "error")
+        else:
+            if not message_record:
+                message_record = PrincipalMessage(message=new_text.strip())
+                db.session.add(message_record)
+            else:
+                message_record.message = new_text.strip()
+                
+            if image and image.filename != "":
+                filename = secure_filename(image.filename)
+                # Prepend timestamp to avoid overwriting files with the same name
+                unique_filename = f"{int(time.time())}_{filename}"
+                image_path = os.path.join(app.config["UPLOAD_FOLDER"], unique_filename)
+                
+                try:
+                    image.save(image_path)
+                    
+                    # Optionally, if you want to delete the old image:
+                    # if message_record.image_filename:
+                    #     old_image_path = os.path.join(app.config["UPLOAD_FOLDER"], message_record.image_filename)
+                    #     if os.path.exists(old_image_path):
+                    #         os.remove(old_image_path)
+                            
+                    message_record.image_filename = unique_filename
+                except Exception as e:
+                    flash(f"Error saving image: {e}", "error")
+            
+            db.session.commit()
+            flash("Principal message and image updated successfully!", "success")
+            
+    return render_template("adminPrincipal.html", admin=session["admin"], message_record=message_record)
 def delete_student(id):
     if "admin" not in session:
         return redirect(url_for("admin_login"))
@@ -484,4 +644,7 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()   # Make sure tables exist
     create_default_admins()  # Create admins if none exist
-    app.run(debug=True)
+    
+    # Read debug mode from environment, defaulting to False in production
+    debug_mode = os.environ.get("FLASK_DEBUG", "True").lower() in ("true", "1", "t")
+    app.run(debug=debug_mode)
